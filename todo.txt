@@ -1,0 +1,5 @@
+Add more customizability
+
+Maybe make a tkinter for ease of use?
+
+Possibly make a difficulty rating for each seq

@@ -24,4 +24,4 @@ More updates coming soon!
 
 #### Note
 Was created using [CodeSandbox](https://codesandbox.io/), which is where .devcontainer and .codesandbox come from.
-They don't matter, however, and structgen.py is the important file.
+They don't matter, however, and main.py is the important file.

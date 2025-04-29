@@ -1,4 +1,4 @@
-# Eterna Structre Generator!
+# EteRNA Structre Generator!
 
 A program designed by [Calc4me](https://eternagame.org/players/460832) to randomly generate valid secondary structures for [EteRNA](https://eternagame.org/) puzzles.
 

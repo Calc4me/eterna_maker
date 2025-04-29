@@ -20,7 +20,10 @@ More updates coming soon!
 - Gen 4
   - Fourth generation, overhauled Gen 3.
   - Improved customization and cleaned up generation to 50-60 nts (with well-tuned paramaters)
-
+- Gen 5
+  - Coming soon with better logic and customizablility!
+- Gen 6
+  - Hopfully make into a EteRNA script
 
 #### Note
 Was created using [CodeSandbox](https://codesandbox.io/), which is where .devcontainer and .codesandbox come from.

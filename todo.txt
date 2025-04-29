@@ -1,4 +1,6 @@
 Add more customizability
+- Bulges etc.
+- Stop )))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) at the end 
 
 Maybe make a tkinter for ease of use?
 

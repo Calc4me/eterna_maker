@@ -20,3 +20,8 @@ More updates coming soon!
 - Gen 4
   - Fourth generation, overhauled Gen 3.
   - Improved customization and cleaned up generation to 50-60 nts (with well-tuned paramaters)
+
+
+#### Note
+Was created using [CodeSandbox](https://codesandbox.io/), which is where .devcontainer and .codesandbox come from.
+They don't matter, however, and structgen.py is the important file.

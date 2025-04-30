@@ -8,92 +8,136 @@ Randomly generates valid RNA secondary structures using dot-bracket notation.
 import random
 
 # ----- CONFIGURABLE PARAMETERS -----
-lengthmin = 10              # Target minimum length (structure can be slightly longer)
+lengthmin = 100             # Target minimum length (structure can be slightly longer)
 base_weights = {            # Base probabilities for picking '.', '(' and ')'
-    ".": 0.3,
-    "(": 0.35,
-    ")": 0.25
+    ".": 0.25,
+    "(": 0.4,
+    ")": 0.3
 }
-weight_adjust = 0.4          # Bias to favor repeating last character
-stem_continue_boost = 1.8    # Extra encouragement to continue stems
-stop_prob = 0.5              # Chance of early stopping once minimum length is reached
-open_discourage = 0.2        # Penalty for adding '(' when too many are already open
+weight_adjust = 0.3          # Bias to favor repeating last character
+stem_continue_boost = 2.3    # Extra encouragement to continue stems
+stop_prob = 0.6              # Chance of early stopping once minimum length is reached
+open_discourage = 0.6        # Penalty for adding '(' when too many are already open
 hairpin_weight = 0.7         # Discourage closing ')' immediately after '.' for bigger hairpins
+internal_loop_bias=0.15,     # Bias to add more internal loops
+trailing_dot_chance=0.25,    # Chance to add '.'s at end
+end_internal_loop_chance=0.05# Chance to insert dots before a final ')'
 # -----------------------------------
 
-# Runtime variables
-seq = []                     # List for the final structure
-unpaired_stack = []          # List for tracking indices of unmatched '('
-currlen = 0                  # Counter for the number of unpaired dots '.' since last '('
-last_char = None             # Track last added character (to adjust weights)
+def generate_rna_structure(
+    lengthmin=100,
+    base_weights={".": 0.25, "(": 0.4, ")": 0.3},
+    weight_adjust=0.3,
+    stem_continue_boost=2.4,
+    stop_prob=0.6,
+    open_discourage=0.3,
+    hairpin_weight=0.6,
+    internal_loop_bias=0.1,
+    trailing_dot_chance=0.3,
+    end_internal_loop_chance=0.05  # Chance to insert dots before a final ')'
+):
+    """
+    Generate a biologically plausible dot-bracket RNA secondary structure.
 
-# Main loop
-for i in range(lengthmin * 2):
-    # Start each iteration with base weights
-    weights = base_weights.copy()
-
-    # Adjust weights based on the last character
-    if last_char == ".":
-        weights["."] += weight_adjust            # Encourage dot after dot
-    elif last_char == "(":
-        weights["("] += weight_adjust + stem_continue_boost  # Encourage stacking '('
-    elif last_char == ")":
-        weights[")"] += weight_adjust + stem_continue_boost  # Encourage stacking ')'
-
-    # Restrictions based on current structure:
-    if not unpaired_stack:
-        # If no open '(' available, cannot close ')'
-        weights[")"] = 0
+    Parameters:
+        lengthmin (int): Minimum desired length of the sequence
+        base_weights (dict): Base probabilities for '.', '(', ')'
+        weight_adjust (float): Extra chance to repeat previous character
+        stem_continue_boost (float): Bias to continue a stem
+        stop_prob (float): Chance to stop early after minimum length is reached
+        open_discourage (float): Penalty for adding '(' when too many are unclosed
+        hairpin_weight (float): Penalty for closing ')' right after '.'
+        internal_loop_bias (float): Chance to allow '.)' for 1x1 internal loops
+        trailing_dot_chance (float): Probability to add unpaired dots at the end
+        end_internal_loop_chance (float): Chance to insert '.' or '..' before closing unmatched '('
     
-    # If last '(' is too close (<3 dots), disable closing ')'    
-    elif len(seq) - unpaired_stack[-1] - 1 < 3:
-        weights[")"] = 0
+    Returns:
+        str: Dot-bracket notation RNA structure
+    """
 
-    # Discourage adding more '(' if there are too many unclosed '('
-    if len(unpaired_stack) > 5:
-        weights["("] *= open_discourage
+    seq = []               # The sequence being constructed
+    unpaired_stack = []    # Indices of unmatched '('
+    currlen = 0            # Count of unpaired dots added so far
+    last_char = None       # Track previous character
 
-    # Discourage closing immediately after a '.' to prevent small (3-4 nt) hairpins
-    if seq and seq[-1] == ".":
-        weights[")"] *= hairpin_weight
+    # --- Main sequence generation loop ---
+    for _ in range(lengthmin * 2):
+        weights = base_weights.copy()
 
-    # Normalize weights so they add up to 1
-    total = sum(weights.values())
-    for key in weights:
-        weights[key] /= total
+        # Bias for repeating the last character
+        if last_char == ".":
+            weights["."] += weight_adjust
+        elif last_char == "(":
+            weights["("] += weight_adjust + stem_continue_boost
+        elif last_char == ")":
+            weights[")"] += weight_adjust + stem_continue_boost
 
-    # Pick a character based on weighted random choice
-    choices = [".", "(", ")"]
-    char = random.choices(choices, weights=[weights[c] for c in choices])[0]
+        # Prevent unmatched ')' if no '(' open
+        if not unpaired_stack:
+            weights[")"] = 0
+        # Prevent closing too early (hairpin needs ≥3 bases)
+        elif len(seq) - unpaired_stack[-1] - 1 < 3:
+            weights[")"] = 0
 
-    # Update structure based on chosen character
-    if char == ".":
-        currlen += 1
-        seq.append(".")
-    elif char == "(":
-        seq.append("(")
-        unpaired_stack.append(len(seq) - 1)       # Track position of new '('
-    elif char == ")":
+        # Discourage opening more if too many unclosed '('
+        if len(unpaired_stack) > 5:
+            weights["("] *= open_discourage
+
+        # Discourage closing after a dot (avoid tiny hairpins)
+        if seq and seq[-1] == ".":
+            weights[")"] *= hairpin_weight
+
+        # Normalize weights
+        total = sum(weights.values())
+        for key in weights:
+            weights[key] /= total
+
+        # Randomly pick next character
+        char = random.choices([".", "(", ")"], weights=[weights[c] for c in [".", "(", ")"]])[0]
+
+        if char == ".":
+            currlen += 1
+            seq.append(".")
+        elif char == "(":
+            seq.append("(")
+            unpaired_stack.append(len(seq) - 1)
+        elif char == ")":
+            seq.append(")")
+            if unpaired_stack:
+                unpaired_stack.pop()
+
+        last_char = char
+
+        # Early stopping if conditions are met
+        if not unpaired_stack and currlen >= lengthmin and random.random() < stop_prob:
+            break
+
+    # --- Post-processing: close unpaired '(' properly ---
+    while unpaired_stack:
+        last_open = unpaired_stack.pop()
+        dist = len(seq) - last_open - 1
+
+        # Ensure ≥3 unpaired between '(' and ')'
+        min_loop = random.randint(3, 5)
+        while dist < min_loop:
+            seq.append(".")
+            dist += 1
+
+        # Chance to insert internal loop-like closure (e.g. '..)')
+        if random.random() < end_internal_loop_chance:
+            dots_to_insert = random.choice([1, 1, 1, 2, 2])
+            seq.extend(["."] * dots_to_insert)
+        
         seq.append(")")
-        unpaired_stack.pop()                      # Match with previous '('
 
-    last_char = char
+    # --- Optional: add trailing unpaired bases ---
+    if random.random() < trailing_dot_chance:
+        extra_dots = random.randint(1, 5)
+        seq.extend(["."] * extra_dots)
 
-    # Natural stopping condition:
-    # If minimum dots achieved, and no unpaired '(' left, allow early stop
-    if not unpaired_stack and currlen >= lengthmin and random.random() < stop_prob:
-        break
+    return "".join(seq)
 
-# After main loop, if any unpaired '(' remain, close them properly
-while unpaired_stack:
-    last_open = unpaired_stack.pop()
-    dist = len(seq) - last_open - 1
-    # Force at least 3 dots inside any closing
-    while dist < random.randint(3,5):
-        seq.append(".")
-        dist += 1
-    seq.append(")")
-
-# Final output
-print("Final sequence:")
-print("".join(seq))
+print(generate_rna_structure(
+    lengthmin, base_weights, weight_adjust, stem_continue_boost, 
+    stop_prob, open_discourage, hairpin_weight, internal_loop_bias,
+    trailing_dot_chance, end_internal_loop_chance))

@@ -2,7 +2,7 @@
 
 A program designed by [Calc4me](https://eternagame.org/players/460832) to randomly generate valid secondary structures for [EteRNA](https://eternagame.org/) puzzles.
 
-If you have a change that will improve this, you can either fork this and make the change yourself, or message me on EteRNA, and I'll see what I can do.
+If you have a change that will improve this, you can either fork this and make the change yourself, or message me on EteRNA, and I'll see what I can do. Any suggestions are very much welcome :)
 
 More updates coming soon!
 
@@ -21,10 +21,13 @@ More updates coming soon!
   - Fourth generation, overhauled Gen 3.
   - Improved customization and cleaned up generation to 50-60 nts (with well-tuned paramaters)
 - Gen 5
-  - Coming soon with better logic and customizablility!
+  - Fifth generation, improved on Gen 4.
+  - More customization and both cleaned up generation massively, to the point where 200 nts are good.
 - Gen 6
-  - Hopfully make into a EteRNA script
+  - Clean up Gen 5
+  - Make into EteRNA script
 
 #### Note
+
 Was created using [CodeSandbox](https://codesandbox.io/), which is where .devcontainer and .codesandbox come from.
 They don't matter, however, and main.py is the important file.

@@ -5,4 +5,10 @@ DONE!
 
 Possibly make a difficulty rating for each seq
 
+Presets
+
 Make into script
+
+JSON file?
+
+Tkinter?

@@ -24,8 +24,12 @@ More updates coming soon!
   - Fifth generation, improved on Gen 4.
   - More customization and both cleaned up generation massively, to the point where 200 nts are good.
 - Gen 6
-  - Clean up Gen 5
-  - Make into EteRNA script
+  - Sixth generation, cleaned up Gen 5.
+  - Added more explanation, and cleaned up code, and added more comments and better logic.
+- Gen 7
+  - EteRNA script
+  - Presets?
+  - JSON file for easier modification of constraints?
 
 #### Note
 

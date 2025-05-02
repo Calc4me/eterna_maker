@@ -8,37 +8,31 @@ Randomly generates valid RNA secondary structures using dot-bracket notation.
 import random
 
 # ----- CONFIGURABLE PARAMETERS -----
-lengthmin = 55              # Target minimum length (structure can be slightly longer)
-base_weights = {            # Base probabilities for picking '.', '(' and ')'
-    ".": 0.3,
-    "(": 0.4,
-    ")": 0.3
-}
-weight_adjust = 0.3          # Bias to favor repeating last character
-stem_continue_boost = 2.2    # Extra encouragement to continue stems
-stop_prob = 0.6              # Chance of early stopping once minimum length is reached
-open_discourage = 0.6        # Penalty for adding '(' when too many are already open
-hairpin_weight = 0.55        # Discourage closing ')' immediately after '.' for bigger hairpins
-internal_loop_bias=0.15,     # Bias to add more internal loops
-trailing_dot_chance=0.3,     # Chance to add '.'s at end
-end_internal_loop_chance=0.2 # Chance to insert dots before a final ')'
-end_weights = [0.6, 0.4]     # Weights for 1 or 2 '.'s at closing step
-trailing = True              # Add trailing '.'s or no
+lengthmin = 50                                   # Target minimum length (structure can be slightly longer)
+base_weights = {".": 0.33, "(": 0.34, ")": 0.33} # Base probabilities for picking '.', '(' and ')' 
+weight_adjust = 0.2                              # Bias to favor repeating last character.
+stem_continue_boost = 2.0                        # Extra encouragement to continue stems. 
+stop_prob = 0.6                                  # Chance of early stopping once minimum length is reached.
+open_discourage = 0.6                            # Penalty for adding '(' when too many are already open.
+hairpin_weight = 0.55                            # Discourage closing ')' immediately after '.' for bigger hairpins.
+trailing_dot_chance = 0.6,                       # Chance to add '.'s at end.
+end_internal_loop_chance=0.2                     # Chance to insert dots before a final ')'.
+end_weights = [0.6, 0.4]                         # Weights for 1 or 2 '.'s at closing step. 
+trailing = True                                  # Add trailing '.'s or no. 
 # -----------------------------------
 
 def generate_rna_structure(
-    lengthmin=100,
-    base_weights={".": 0.25, "(": 0.4, ")": 0.3},
-    weight_adjust=0.3,
-    stem_continue_boost=2.2,
-    stop_prob=0.6,
-    open_discourage=0.6,
-    hairpin_weight=0.55,
-    internal_loop_bias=0.15,
-    trailing_dot_chance=0.3,
-    end_internal_loop_chance=0.2,  # Chance to insert dots before a final ')'
-    end_weights=[0.6,0.4],
-    trailing=True
+    lengthmin,
+    base_weights,
+    weight_adjust,
+    stem_continue_boost,
+    stop_prob,
+    open_discourage,
+    hairpin_weight,
+    trailing_dot_chance,
+    end_internal_loop_chance,
+    end_weights,
+    trailing
 ):
     """
     Generate a biologically plausible dot-bracket RNA secondary structure.
@@ -51,7 +45,6 @@ def generate_rna_structure(
         stop_prob (float): Chance to stop early after minimum length is reached
         open_discourage (float): Penalty for adding '(' when too many are unclosed
         hairpin_weight (float): Penalty for closing ')' right after '.'
-        internal_loop_bias (float): Chance to allow '.)' for 1x1 internal loops
         trailing_dot_chance (float): Probability to add unpaired dots at the end
         end_internal_loop_chance (float): Chance to insert '.' or '..' before closing unmatched '('
         end_weights (list): Weights for adding 1 or 2 dots when adding dots during the closing part.
@@ -131,7 +124,7 @@ def generate_rna_structure(
 
         # Chance to insert internal loop-like closure (e.g. '..)')
         if random.random() < end_internal_loop_chance:
-            dots_to_insert = random.choices([1, 2], weights=end_weights)[0]
+            dots_to_insert = random.choices([1, 2], weights=([(end_weights[0])/(end_weights[0]+end_weights[1]),(end_weights[0])/(end_weights[1]+end_weights[1])]))[0]
             seq.extend(["."] * dots_to_insert)
         
         seq.append(")")
@@ -145,5 +138,5 @@ def generate_rna_structure(
 
 print(generate_rna_structure(
     lengthmin, base_weights, weight_adjust, stem_continue_boost, 
-    stop_prob, open_discourage, hairpin_weight, internal_loop_bias,
+    stop_prob, open_discourage, hairpin_weight,
     trailing_dot_chance, end_internal_loop_chance, end_weights, trailing))

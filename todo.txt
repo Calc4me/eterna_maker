@@ -1,13 +1,10 @@
-Add more customizability
-- Bulges etc.
-- Stop )))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) at the end 
-DONE!
-
 Possibly make a difficulty rating for each seq
 
 Presets
 
 Make into script
+
+MAKE 300+ BASE PUZZLE YOU PROMISED
 
 JSON file?
 

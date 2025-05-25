@@ -27,7 +27,10 @@ More updates coming soon!
   - Sixth generation, cleaned up Gen 5.
   - Added more explanation, and cleaned up code, and added more comments and better logic.
 - Gen 7
-  - EteRNA script
+  - Seventh generation, cleaned up Gen 6.
+  - Added internal loops and a few other minor improvements
+- Gen 8
+  - More variance (has gone down, less internal loops, etc.)
   - Presets?
   - JSON file for easier modification of constraints?
 

@@ -56,3 +56,8 @@ Higher -> More likely, Lower -> Less likely
 
 Add trailing '.'s or no.  
 Higher -> More likely, Lower -> Less likely
+
+#### internal_loop_bias (Float)
+
+Bias towards internal loops
+Higher -> More likely, Lower -> Less likely

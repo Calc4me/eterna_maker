@@ -8,7 +8,7 @@ Randomly generates valid RNA secondary structures using dot-bracket notation.
 import random
 
 # ----- CONFIGURABLE PARAMETERS -----
-lengthmin = 35                                   # Target minimum length (structure can be slightly longer)
+lengthmin = 20                                   # Target minimum length (structure can be slightly longer)
 base_weights = {".": 0.30, "(": 0.35, ")": 0.35} # Base probabilities for picking '.', '(' and ')' 
 weight_adjust = 0.60                             # Bias to favor repeating last character.
 stem_continue_boost = 2.6                        # Extra encouragement to continue stems. 

@@ -61,3 +61,7 @@ Higher -> More likely, Lower -> Less likely
 
 Bias towards internal loops
 Higher -> More likely, Lower -> Less likely
+
+#### multiloop_force (Bool)
+
+Whether to force the final solution to have a multiloop or not.

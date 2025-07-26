@@ -20,7 +20,7 @@ end_internal_loop_chance = 0.10                  # Chance to insert dots before 
 end_weights = [0.4, 0.4, 0.2]                    # Weights for 1 or 2 '.'s at closing step.
 trailing = True                                  # Add trailing '.'s or not.
 internal_loop_bias = 7                           # Boost to close ')' when enough dots after matching '('
-multiloop_force = True                           # Force a multiloop in the sequence generated.
+multiloop_force = False                          # Force a multiloop in the sequence generated.
 # -----------------------------------
 
 # ----- DEBUG AREA -----
@@ -209,3 +209,12 @@ if multiloop_force == True:
                 )
             print(f'Result:\n{result}\nlength: {len(list(result))}')
             print("")
+else: 
+    result = generate_rna_structure(
+                    lengthmin, base_weights, weight_adjust, stem_continue_boost, 
+                    stop_prob, open_discourage, hairpin_weight,
+                    trailing_dot_chance, end_internal_loop_chance, end_weights, trailing,
+                    internal_loop_bias
+                )
+    print(f'Result:\n{result}\nlength: {len(list(result))}')
+    print("")

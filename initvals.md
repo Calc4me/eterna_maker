@@ -22,6 +22,21 @@ It takes a while to figure out settings you like, so play around with them for a
     - internal_loop_bias = 7
     - multiloop_force = False
 
+- Small and complicated
+    - lengthmin = 20
+    - base_weights = {".": 0.35, "(": 0.35, ")": 0.40}
+    - weight_adjust = 0.75
+    - stem_continue_boost = 1.25
+    - stop_prob = 0.95
+    - open_discourage = 0.35
+    - hairpin_weight = 0.50
+    - trailing_dot_chance = 0.6
+    - end_internal_loop_chance = 0.18
+    - end_weights = [0.4, 0.4, 0.2]
+    - trailing = True
+    - internal_loop_bias = 7
+    - multiloop_force = False
+
 - Small multiloops (What I used for Partiality 3)
     - lengthmin = 22
     - base_weights = {".": 0.35, "(": 0.35, ")": 0.31}

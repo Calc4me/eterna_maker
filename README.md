@@ -36,7 +36,7 @@ More updates coming soon!
   - More variance (has gone down, less internal loops, etc.), presets, multiloop forcing, and small changes.
 - Gen 8.1
   - Add more comments for readability
-  - Coming soon, minor changes
+  - Cleaned up the code and fixed some logic errors, and added full_debug
 - Gen 9 (in development)
   - JSON file for easier modification of constraints?
   - EteRNA script?

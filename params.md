@@ -2,6 +2,14 @@
 
 Here's a explanation for each parameter :)
 
+Note: for people who don't know Python or need a quick refresher on datatypes here you go:
+- Datatypes
+    - Int: An integer, can be negative
+    - Float: A number with a decimal point, which can be an integer, i.e. 5.0
+    - Dict: A dictionary, where you can look up entries and their definitions
+    - Bool: Either True or False \(mind the capitalizion\)
+    - List: A list of values, such as \[1,2,3\]
+
 #### lengthmin (Int)
 
 Target minimum length (structure can be slightly longer than 2x)  
@@ -65,3 +73,11 @@ Higher -> More likely, Lower -> Less likely
 #### multiloop_force (Bool)
 
 Whether to force the final solution to have a multiloop or not.
+
+#### debug_errors (Bool)
+
+Prints error messages. Likely not that useful.
+
+#### full_debug (Bool)
+
+Shows the last char, weights, normalized weights, unpaired stack, and the chosen character, as well as the stopping condition for each repetition of the loop. Useful to see what the change you just made in a paremeter just did.

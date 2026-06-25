@@ -8,10 +8,10 @@ Randomly generates valid RNA secondary structures using random chance and parame
 import random
 
 # ----- CONFIGURABLE PARAMETERS -----
-lengthmin = 20                                   # Target minimum length (structure can be slightly longer)
+lengthmin = 5                                    # Target minimum length (structure can be slightly longer)
 base_weights = {".": 0.35, "(": 0.35, ")": 0.40} # Base probabilities for picking '.', '(' and ')' 
-weight_adjust = 0.75                             # Bias to favor repeating last character.
-stem_continue_boost = 1.25                       # Extra encouragement to continue stems. 
+weight_adjust = 0.95                             # Bias to favor repeating last character.
+stem_continue_boost = 1.50                       # Extra encouragement to continue stems. 
 stop_prob = 0.95                                 # Chance of early stopping once minimum length is reached.
 open_discourage = 0.35                           # Penalty for adding '(' when too many are already open.
 hairpin_weight = 0.50                            # Discourage closing ')' immediately after '.' for bigger hairpins.

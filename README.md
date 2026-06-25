@@ -1,10 +1,11 @@
 # EteRNA Structre Generator!
 
-A program designed by [Calc4me](https://eternagame.org/players/460832) to randomly generate valid secondary structures for [EteRNA](https://eternagame.org/) puzzles.
+The **second** (yay!) iteration program designed by [Calc4me](https://eternagame.org/players/460832) to randomly generate valid secondary structures for [EteRNA](https://eternagame.org/) puzzles.
 
-If you have a change that will improve this, you can either fork this and make the change yourself, or message me on EteRNA, and I'll see what I can do. Any suggestions are very much welcome, and any issues you find can be reported in the issues on github.
+If you have a change that will improve this, you can either fork this and make the change yourself, or message me on EteRNA, and I'll see what I can do. Any suggestions are very much welcome, and any issues you find can be reported in the issues on GitHub.
 
-For an explanation of the paramaters, look at params.md, and to see some recommended intital values, see initvals.md.
+If you are looking for the older model, see the folder labeled "old vers". All the old files are kept there but will not be maintained.
+For an explanation of the new model, see introduction.md, and for paramater types, see paramtype.md.
 
 More updates coming soon!
 
@@ -34,13 +35,9 @@ More updates coming soon!
 - Gen 8
   - Eighth gen, improved Gen 7.
   - More variance (has gone down, less internal loops, etc.), presets, multiloop forcing, and small changes.
-- Gen 8.1
+- Gen 8 v2
   - Add more comments for readability
   - Cleaned up the code and fixed some logic errors, and added full_debug
-- Gen 9 (in development)
-  - JSON file for easier modification of constraints?
-  - EteRNA script?
-  - 4,5,...-multiloop forcing?
-  - Internal loop forcing?
-  - More presets?
-  - Better UI
+- Gen v2 1
+  - Redid everything from the ground up using a more natural algorithm that gives more natural control over the output.
+  - Added a more user-friendly UI

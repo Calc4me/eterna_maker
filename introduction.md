@@ -13,4 +13,6 @@ The template will look something like this: ((\*)\(\*)). The parentheses represe
 
 Once you continue, using your paramaters, the program will then generate a finished structure and ask if it is acceptable. This process can be repeated as many times as neccecary. If you set visualize_structure to True, then it will show you a visualization of the structure in a seperate window. The window has to be closed for the program to continue.
 
+If you gave a filepath for export, the structure will also be written to that file for ease of use, with statistics.
+
 Feel free to use the generated structures however you like! A mention of this program would be nice :)

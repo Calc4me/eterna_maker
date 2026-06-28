@@ -103,5 +103,5 @@ def convertstack(size: int,dratio: float,onechance: float,twochance: float,maxco
     if split is None:
         raise RuntimeError("Stack splitting failed")
 
-    # Return the full stack and its two halves
-    return ["".join(temp), "".join(split[0]), "".join(split[1])]
+    # Return the full stack and its two halves and the bulge count
+    return ["".join(temp), "".join(split[0]), "".join(split[1]), len(dotpos)]

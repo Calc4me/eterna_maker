@@ -1,6 +1,6 @@
 import random
 
-def convertstack(size: int,dratio: float,onechance: float,twochance: float,maxcountdiff: int,maxposdiff: int):
+def convertstack(size: int,dratio: float,onechance: float,twochance: float,maxcountdiff: int,maxposdiff: int, maxonesideposdiff: int):
     '''
     Generates a stack from given parameters.
     Parameters:
@@ -38,6 +38,21 @@ def convertstack(size: int,dratio: float,onechance: float,twochance: float,maxco
         # Add for removal dots that are 1 position away from either end of the stack
         if dotpos[i] <= 2 or dotpos[i] >= 2*size-1 or dotpos[i]==size-1 or dotpos[i]==size+1:
             dellist.add(dotpos[i])
+        if len(dotpos)-1 > i > 0:
+            if abs(dotpos[i]-dotpos[i-1]) <= maxonesideposdiff:
+                c = random.choice([0,1])
+                dellist.add([dotpos[i], dotpos[i-1]][c])
+                if i < size:
+                    counts[0] -= 1
+                elif i > size:
+                    counts[1] -= 1
+            elif abs(dotpos[i]-dotpos[i+1]) <= maxonesideposdiff:
+                c = random.choice([0,1])
+                dellist.add([dotpos[i], dotpos[i+1]][c])
+                if i < size:
+                    counts[0] -= 1
+                elif i > size:
+                    counts[1] -= 1 
         # Check through all pairs of dots
         for j in range(len(dotpos)-i-1):
             # Mirror the paired one to the same side as the other

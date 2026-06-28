@@ -10,7 +10,7 @@
 ## Template Length Assignment
 - assigntype -> Integer
 - mean -> Integer
-- stdev -> Integer 
+- stdev -> Float / Integer 
 - lengthrange -> Integer list
 - probabilities -> Float list (normalized)
 
@@ -21,6 +21,7 @@
 - dotratio -> Float
 - maxcountdiff -> Integer
 - maxposdiff -> Integer
+- maxonesideposdiff -> Integer
 - onechance -> Float
 - twochance -> Float
 - minloopdots -> Integer
@@ -36,3 +37,4 @@
 
 ## Other
 - debug -> Boolean
+- visualize_structure -> Boolean

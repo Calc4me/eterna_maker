@@ -11,6 +11,6 @@ This program works in three basic steps:
 
 The template will look something like this: ((\*)\(\*)). The parentheses represent stacks with bulges (no internal loops), and the asterisks represent hairpin loops. The program will ask you if the given template is acceptable to continue with, along with the template's length.
 
-Once you continue, using your paramaters, the program will then generate a finished structure and ask if it is acceptable. This process can be repeated as many times as neccecary.
+Once you continue, using your paramaters, the program will then generate a finished structure and ask if it is acceptable. This process can be repeated as many times as neccecary. If you set visualize_structure to True, then it will show you a visualization of the structure in a seperate window. The window has to be closed for the program to continue.
 
 Feel free to use the generated structures however you like! A mention of this program would be nice :)

@@ -41,3 +41,6 @@ More updates coming soon!
 - Gen v2 1
   - Redid everything from the ground up using a more natural algorithm that gives more natural control over the output.
   - Added a more user-friendly UI
+- Gen v2 1.1
+  - Added structure visualization and "neighbor removal"
+  - Fixed spelling

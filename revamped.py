@@ -60,32 +60,32 @@ Fun templates:
 
 # Template Generation
 tempchances = [0.85, 0.45] # Matrix format: [Chance for ( if ( before, chance for ( if ) before]
-temprange = [4,10] # Minimum [0]/2 stacks, maximum [1]/2 stacks
+temprange = [10,20] # Minimum [0]/2 stacks, maximum [1]/2 stacks
 bias = 0.025 # Bias towards closing (subtracts from tempchances[0])
 rerollchance = 0.25 # Chance to continue after a valid template is generated
 user_template = [] # Template runtime variable, set to your template if using your owen, set to [] if not using premade (NEEDS TO BE BALANCED AND HAVE *'s)
 
 # Template Length Assignment
 assigntype = 0 # 0 = Normally distributed, 1 = Uniformly distributed, 2 = User-made probabilites
-mean = 8 # Mean of stack lengths (option 0)
-stdev = 2.5 # SD of stack lengths (option 0) 
+mean = 11 # Mean of stack lengths (option 0)
+stdev = 4 # SD of stack lengths (option 0) 
 lengthrange = [3,10] # Range of stack lengths (option 1+2)
 probabilities = [0.05, 0.05, 0.1, 0.3, 0.3, 0.1, 0.05, 0.05] # Individual stack length probabilities from lengthrange[0] to lengthrange[1] (option 2)
-min_stack_size = 2 # Minimum size of a stack
+min_stack_size = 4 # Minimum size of a stack
 
 # Loop making
-looprange = [1,2] # Min internal loop size, max internal loop size
+looprange = [1,4] # Min internal loop size, max internal loop size
 
 # Stack Generation
 conversionvars = {
-    "dotratio": 0.35, # Ratio of dots to paired bases before removal of adjacent unpaired bases
+    "dotratio": 0, # Ratio of dots to paired bases before removal of adjacent unpaired bases
     "maxcountdiff": 2, # Max difference between unpaired base counts on each side of the generated stack that allows for random unpaired base removal
     "maxposdiff": 1, # Max difference between the position of two unpaired bases to warrant removal of one between sides of a stack
     "maxonesideposdiff": 1, # Max differece between the position of two unpaired bases to warrant removal of one on the same side of a stack
     "onechance": 0.6, # Chance for "." as the inserted unpaired base
     "twochance": 0.35, # Same as above, but "..". The remaining chance between the two is the chance that "..." is inserted.
-    "minloopdots": 3, # Minimum unpaired bases in a hairpin
-    "maxloopdots": 6 # Maximum unpaired bases in a hairpin
+    "minloopdots": 6, # Minimum unpaired bases in a hairpin
+    "maxloopdots": 11 # Maximum unpaired bases in a hairpin
 }
 
 # Runtime variables (don't touch)
@@ -98,14 +98,15 @@ stopFlag = False
 
 # Other
 debug = False # Print more stuff to help with debugging
-visualize_structure = True # Visualize the RNA structure (close the window to continue)
+visualize_structure = False # Visualize the RNA structure (close the window to continue)
 seed = None # To generate the same sequence every time, set to a certain seed instead of None
 export_file = "structure_export.txt" # Insert the file export location here
 full_stats = True # Set to True to show full stats about the given structure
 write_or_append = "a" # "a" appends to the end of the export file, "w" overwrites previous contents
 
 # Intro
-random.seed(seed)
+if seed is not None:
+    random.seed(seed)
 print("------RNA secondary structure generator by Calc4me-------")
 print("Read introduction.md and README.md if you haven't already!")
 print("")
@@ -116,60 +117,61 @@ while not stopFlag:
     # Reset vars
     tempContinueFlag = False
     generationContinueFlag = False
-    looplist.clear()
-    stack.clear()
-    pairslist.clear()
     template = user_template.copy()
-    bulgecount = 0
 
     # Generate template list, first check if there is no user-made template
     if len(template) < 1:
         # While the user is unsatisfied
         while not tempContinueFlag:
-            # While the template length is out of range
-            while not temprange[0] < len("".join(template).replace("*", "")) < temprange[1]:
+            while True:
                 template = ["("]
-                # Generate template
                 gentemp.generatetemp(template, tempchances, bias, debug=debug, maxlen=temprange[1]*1.5)
+                if temprange[0] < len("".join(template).replace("*", "")) < temprange[1]:
+                    break
             structure = "".join(template)
             answer = input(f'Is {structure} (length {len(structure.replace("*", ""))}) acceptable? (Y/N) ')
             # If it is acceptable, continue
             if answer.lower() == "y": tempContinueFlag = True
             else: tempContinueFlag = False
 
-    # Generate template to modify
-    working_template = template.copy()
-
-    # Insert loops:
-    for pos in range(len(working_template) - 1):
-        # If pos and pos+1 in the template are both stacks
-        if working_template[pos] in "()" and working_template[pos + 1] in "()":
-            # Add an internal loop to the looplist
-            looplist.append("." * random.randint(looprange[0], looprange[1]))
-        else:
-            # Otherwise, add no loop
-            looplist.append("")
-    # Add 1 more no loop so template and looplist are the same size so zip(template,looplist) works.
-    looplist.append("")
-    working_template = [item for pair in zip(working_template, looplist) for item in pair]
-
-    # Assign length values to them and generate stacks:
-    # Find all the stacks and their pairs and add them to a list
-    for pos, char in enumerate(working_template):
-        if char == "(":
-            stack.append(pos)
-        elif char == ")":
-            if not stack:
-                raise ValueError("Unbalanced template")
-            open_pos = stack.pop()
-            pairslist.append([open_pos, pos])
-    # Sort the list by the first position
-    pairslist.sort(key=lambda pair: pair[0])
-    if debug:
-        print(pairslist)
-
-    # If the user is unsatisfied with the stacks added
+    # If the user is unsatisfied with the stacks and loops added
     while not generationContinueFlag:
+        # Clear detritus in the vars
+        looplist.clear()
+        stack.clear()
+        pairslist.clear()
+        # Generate template to modify
+        working_template = template.copy()
+
+        # Insert loops:
+        for pos in range(len(working_template) - 1):
+            # If pos and pos+1 in the template are both stacks
+            if working_template[pos] in "()" and working_template[pos + 1] in "()":
+                # Add an internal loop to the looplist
+                looplist.append("." * random.randint(looprange[0], looprange[1]))
+            else:
+                # Otherwise, add no loop
+                looplist.append("")
+        # Add 1 more no loop so template and looplist are the same size so zip(template,looplist) works.
+        looplist.append("")
+        working_template = [item for pair in zip(working_template, looplist) for item in pair]
+
+        # Assign length values to them and generate stacks:
+        # Find all the stacks and their pairs and add them to a list
+        for pos, char in enumerate(working_template):
+            if char == "(":
+                stack.append(pos)
+            elif char == ")":
+                if not stack:
+                    raise ValueError("Unbalanced template")
+                open_pos = stack.pop()
+                pairslist.append([open_pos, pos])
+        # Sort the list by the first position
+        pairslist.sort(key=lambda pair: pair[0])
+        if debug:
+            print(pairslist)
+
+        bulgecount = 0
         if assigntype == 2:
             # Generate lengths for option 2
             lengths = list(range(lengthrange[0], lengthrange[1]+1))
@@ -189,7 +191,7 @@ while not stopFlag:
             # If it's a hairpin, add that too
             if (pairslist[i][0] + 2 < len(working_template)
                 and working_template[pairslist[i][0]+2] == "*"):
-                working_template[pairslist[i][0]+2] = "".join(["."] * random.randint(conversionvars["minloopdots"], conversionvars["maxloopdots"]))
+                working_template[pairslist[i][0]+2] = "." * random.randint(conversionvars["minloopdots"],conversionvars["maxloopdots"])
         if debug:
             print(working_template)
         # Query

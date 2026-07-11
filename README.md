@@ -44,3 +44,6 @@ More updates coming soon!
 - Gen v2 1.1
   - Added structure visualization and "neighbor removal"
   - Fixed spelling
+- Gen v2 1.2
+  - Fixed major bugs in the code
+  - Cleaned it up and added a slightly better UI and more stats

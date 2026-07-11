@@ -1,0 +1,37 @@
+A good set of parameters for well-rounded structures:
+
+tempchances = [0.85, 0.35]
+temprange = [4,12]
+bias = 0.025
+reroll_chance = 0.25
+user_template = []
+
+assigntype = 0
+mean = 6 
+stdev = 2 
+lengthrange = [3,10]
+probabilities = [0.05, 0.05, 0.1, 0.3, 0.3, 0.1, 0.05, 0.05]
+min_stack_size = 2
+
+looprange = [1,2]
+
+"dotratio": 0.23, 
+"maxcountdiff": 2, 
+"maxposdiff": 1,
+"maxonesideposdiff": 1, 
+"onechance": 0.6, 
+"twochance": 0.35,
+"minloopdots": 3,
+"maxloopdots": 6 
+
+debug = False
+visualize_structure = True
+seed = None
+export_file = "structure_export.txt"
+full_stats = True
+
+Fun templates:
+["(", "(", "(", "(", "*", ")", ")", "(", "*", ")", ")", ")"]
+["(", "(", "(", "*", ")", ")", "(", "*", ")", ")"]
+["(", "(", "*", ")", ")", "(", "*", ")"]
+["(", "(", "*", ")", "(", "*", ")", ")"]

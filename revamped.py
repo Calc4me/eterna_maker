@@ -14,7 +14,7 @@ nummultis = 0
 
 # Template Generation
 tempchances = [0.85, 0.45]
-temprange = [8,12]
+temprange = [18,22]
 bias = 0.025
 reroll_chance = 0.25
 user_template = []
@@ -135,7 +135,9 @@ while not stopFlag:
         # Insert pseudoknots
         if pseudoknots and working_template.count("*") >= 2:
             backup_temp = working_template.copy()
+            pkcontinueflag = False
             while not pkcontinueflag:
+                working_template = backup_temp.copy()
                 # Clear between tries
                 pseudoknotpairs.clear()
                 attemptcount = 0

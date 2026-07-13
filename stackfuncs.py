@@ -1,5 +1,53 @@
 import random
 
+def generatetemp(templa: list, matrix: list, bias: float, debug=False, maxlen=100, returnpos=True):
+    '''
+    Generates an RNA secondary structure template using given parameters.
+    Parameters:
+    templa (list): The template to append to
+    matrix (list): A matrix of probabilities for appending characters based on the previous one
+    bias (float): The bias towards ")" (subtracts from matrix[0])
+    maxlen (integer): The maximum a template can be before generation restarts
+    returnpos (Boolean): Whether or not to return the positions of all "("s involved in multiloops, packaged into lists for each one.
+    '''
+    depth = 1
+    fulllist = []
+    active_multis = {}
+    
+    while depth > 0 and len(templa) <= maxlen:
+
+        if debug:
+            print("Before:", templa, depth)
+
+        choice = random.random()
+        prev = templa[-1]
+        p_open = matrix[0] if prev == "(" else matrix[1]
+        p_open = max(0, p_open - bias * depth)
+
+        if choice < p_open:
+            templa.append("(")
+            depth += 1
+            if prev == ")":
+                if depth not in active_multis:
+                    active_multis[depth]=[len(templa)-1]
+                else:
+                    active_multis[depth].append(len(templa)-1)
+                    
+        else:
+            if prev == "(":
+                templa.append("*")
+            templa.append(")")
+            if depth in active_multis:
+                fulllist.append(active_multis[depth])
+                active_multis.pop(depth)
+            depth -= 1
+
+        if debug:
+            print("After:", templa, depth)
+    
+    if returnpos:
+        return fulllist
+
 def convertstack(size: int,dratio: float,onechance: float,twochance: float,maxcountdiff: int,maxposdiff: int, maxonesideposdiff: int):
     '''
     Generates a stack from given parameters.

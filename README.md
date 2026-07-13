@@ -1,15 +1,13 @@
-# EteRNA Structre Generator!
+# EteRNA Structre Generator
 
 The **second** (yay!) iteration program designed by [Calc4me](https://eternagame.org/players/460832) to randomly generate valid secondary structures for [EteRNA](https://eternagame.org/) puzzles.
 
 If you have a change that will improve this, you can either fork this and make the change yourself, or message me on EteRNA, and I'll see what I can do. Any suggestions are very much welcome, and any issues you find can be reported in the issues on GitHub.
 
 If you are looking for the older model, see the folder labeled "old vers". All the old files are kept there but will not be maintained.
-For an explanation of the new model, see introduction.md, and for paramater types, see paramtype.md.
+For an explanation of the new model, see introduction.md, and for further explanation of parameters, see paramtype.md.
 
-More updates coming soon!
-
-## Current Generations:
+## Generations so far:
 
 - Gen 1
   - First generation, simple and very rigid.
@@ -38,7 +36,7 @@ More updates coming soon!
 - Gen 8 v2
   - Add more comments for readability
   - Cleaned up the code and fixed some logic errors, and added full_debug
-- Gen v2 1
+- **Gen v2 1**
   - Redid everything from the ground up using a more natural algorithm that gives more natural control over the output.
   - Added a more user-friendly UI
 - Gen v2 1.1
@@ -47,3 +45,6 @@ More updates coming soon!
 - Gen v2 1.2
   - Fixed major bugs in the code
   - Cleaned it up and added a slightly better UI and more stats
+- Gen v2 2
+  - Added pseudoknot support, more stats, and customizability when viewing templates
+  - Created a better explanation for stats and added better starting parameters, plus also cleaned up file structure

@@ -24,6 +24,17 @@ looprange = [1,2]
 "minloopdots": 3,
 "maxloopdots": 6 
 
+pseudoknots = False
+numpseudoknots = 2
+pkassigntype = 0
+pkmean = 6 
+pkstdev = 1 
+pklengthrange = [3,10]
+pkprobabilities = [0.05, 0.05, 0.1, 0.3, 0.3, 0.1, 0.05, 0.05]
+pkminsize = 2
+surroundrange = [1,2]
+hairpinmaxdiff = 1
+
 debug = False
 visualize_structure = True
 seed = None
